@@ -31,9 +31,9 @@ public class StringSchema {
             return false;
         }
 
-        if(str == null && (!subStrings.isEmpty() || lengthRestriction != null)) {
+        if (str == null && (!subStrings.isEmpty() || lengthRestriction != null)) {
             return false;
-        } else if(str == null) {
+        } else if (str == null) {
             return true;
         }
 
@@ -42,8 +42,8 @@ public class StringSchema {
 
     private boolean isContains(String str) {
 
-        for(var sub : subStrings) {
-            if(!str.contains(sub)) {
+        for (var sub : subStrings) {
+            if (!str.contains(sub)) {
                 return false;
             }
         }
@@ -52,7 +52,7 @@ public class StringSchema {
     }
 
     private boolean isTheSameLength(String str) {
-        if(lengthRestriction == null) {
+        if (lengthRestriction == null) {
             return true;
         } else {
             return str.length() > lengthRestriction;
