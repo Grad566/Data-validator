@@ -3,6 +3,8 @@ package hexlet.code;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ValidatorTest {
@@ -66,6 +68,33 @@ class ValidatorTest {
         var schema = validator.number();
 
         var actual = schema.isValid(null);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validatorNullMap() {
+        var expected = true;
+        var schema = validator.map();
+
+        var actual = schema.isValid(null);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validatorNormalMap() {
+        var expected = true;
+        var schema = validator.map();
+
+        schema.required();
+        schema.sizeof(2);
+
+        var data = new HashMap<String, String>();
+        data.put("key1", "value1");
+        data.put("key2", "value2");
+
+        var actual = schema.isValid(data);
 
         assertEquals(expected, actual);
     }
