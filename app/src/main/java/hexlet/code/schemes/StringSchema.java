@@ -1,43 +1,43 @@
-package hexlet.code;
+package hexlet.code.schemes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringSchema {
-    private boolean restriction;
-    private Integer lengthRestriction;
+public class StringSchema extends BaseSchema<String> {
+
+    private Integer minValueOfLength;
+    private boolean lengthRestriction;
     private List<String> subStrings;
+    private boolean subStringsRestriction;
 
     public StringSchema() {
-        restriction = false;
+        super();
         subStrings = new ArrayList<>();
+        lengthRestriction = false;
+        subStringsRestriction = false;
     }
 
-    public void required() {
-        restriction = true;
-    }
-
-    public void minLength(int length) {
-        lengthRestriction = length;
-    }
-
-    public void contains(String substring) {
-        subStrings.add(substring);
-    }
-
+    @Override
     public boolean isValid(String str) {
 
-        if (restriction && (str == null || str.isEmpty())) {
-            return false;
-        }
-
-        if (str == null && (!subStrings.isEmpty() || lengthRestriction != null)) {
+        if ((str == null || str.isEmpty())
+                && (restriction || lengthRestriction || subStringsRestriction)) {
             return false;
         } else if (str == null) {
             return true;
         }
 
         return isContains(str) && isTheSameLength(str);
+    }
+
+    public void minLength(int length) {
+        minValueOfLength = length;
+        lengthRestriction = true;
+    }
+
+    public void contains(String substring) {
+        subStrings.add(substring);
+        subStringsRestriction = true;
     }
 
     private boolean isContains(String str) {
@@ -52,10 +52,10 @@ public class StringSchema {
     }
 
     private boolean isTheSameLength(String str) {
-        if (lengthRestriction == null) {
+        if (!lengthRestriction) {
             return true;
         } else {
-            return str.length() > lengthRestriction;
+            return str.length() > minValueOfLength;
         }
     }
 }
