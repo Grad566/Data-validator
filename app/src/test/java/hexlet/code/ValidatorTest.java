@@ -7,15 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ValidatorTest {
     private static Validator validator;
-    private static String emptyString;
-    private static String nullString;
-    private static String str;
 
     @BeforeAll
     public static void setInput() {
-        emptyString = "";
-        nullString = null;
-        str = "what does the fox say";
         validator = new Validator();
     }
 
@@ -23,7 +17,7 @@ class ValidatorTest {
     public void validatorNullString() {
         var expected = true;
         var schema = validator.string();
-        var actual = schema.isValid(nullString);
+        var actual = schema.isValid(null);
 
         assertEquals(expected, actual);
     }
@@ -34,7 +28,7 @@ class ValidatorTest {
         var schema = validator.string();
 
         schema.required();
-        var actual = schema.isValid(emptyString);
+        var actual = schema.isValid("");
 
         assertEquals(expected, actual);
     }
@@ -47,7 +41,31 @@ class ValidatorTest {
         schema.contains("wh");
         schema.minLength(2);
 
-        var actual = schema.isValid(str);
+        var actual = schema.isValid("what does the fox say");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validatorNormalNumber() {
+        var expected = true;
+        var schema = validator.number();
+
+        schema.required();
+        schema.range(5, 10);
+        schema.positive();
+
+        var actual = schema.isValid(5);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validatorNullNumber() {
+        var expected = true;
+        var schema = validator.number();
+
+        var actual = schema.isValid(null);
 
         assertEquals(expected, actual);
     }
