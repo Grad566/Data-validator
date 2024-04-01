@@ -10,6 +10,7 @@ public class StringSchema extends BaseSchema<String> {
     private List<String> subStrings;
     private boolean subStringsRestriction;
 
+    // в конструкторе устанавливаем все ограничения на false
     public StringSchema() {
         restriction = false;
         subStrings = new ArrayList<>();
@@ -17,12 +18,15 @@ public class StringSchema extends BaseSchema<String> {
         subStringsRestriction = false;
     }
 
+    // активирует ограничения на null и пустую строку
     @Override
     public StringSchema required() {
         restriction = true;
         return this;
     }
 
+    // сначала обрабатывает случаи с null,
+    // затем проверяет валидность строки
     @Override
     public boolean isValid(String str) {
 
@@ -36,18 +40,21 @@ public class StringSchema extends BaseSchema<String> {
         return isContains(str) && isTheSameLength(str);
     }
 
+    // устанавливает минимальную длину строки
     public StringSchema minLength(int length) {
         minValueOfLength = length;
         lengthRestriction = true;
         return this;
     }
 
+    // добавляет ограничение - подстроки, которые должны быть в строке
     public StringSchema contains(String substring) {
         subStrings.add(substring);
         subStringsRestriction = true;
         return this;
     }
 
+    // проверяет содержит ли строка подстроки
     private boolean isContains(String str) {
 
         for (var sub : subStrings) {
@@ -59,6 +66,7 @@ public class StringSchema extends BaseSchema<String> {
         return true;
     }
 
+    // проверяет длину строки
     private boolean isTheSameLength(String str) {
         if (!lengthRestriction) {
             return true;

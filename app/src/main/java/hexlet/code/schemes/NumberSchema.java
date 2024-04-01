@@ -7,6 +7,7 @@ public class NumberSchema extends BaseSchema<Integer> {
     private Integer maxValue;
     private boolean rangeRestriction;
 
+    // в конструкторе устанавливаем все ограничения на false
     public NumberSchema() {
         restriction = false;
         positiveRestriction = false;
@@ -15,12 +16,15 @@ public class NumberSchema extends BaseSchema<Integer> {
         rangeRestriction = false;
     }
 
+    // активирует ограничения на null
     @Override
     public NumberSchema required() {
         restriction = true;
         return this;
     }
 
+    // сначала обрабатывает случаи с null,
+    // затем проверяет валидность числа
     @Override
     public boolean isValid(Integer value) {
         if (value == null && (restriction || positiveRestriction || rangeRestriction)) {
@@ -32,11 +36,13 @@ public class NumberSchema extends BaseSchema<Integer> {
         return isInRange(value) && isPositive(value);
     }
 
+    // устанавливает ограничения - число не может быть отрицательным
     public NumberSchema positive() {
         positiveRestriction = true;
         return this;
     }
 
+    // устанавливает допустимый диапазон
     public NumberSchema range(int num1, int num2) {
         minValue = num1;
         maxValue = num2;
@@ -44,6 +50,7 @@ public class NumberSchema extends BaseSchema<Integer> {
         return this;
     }
 
+    // проверяет положительность числа
     private boolean isPositive(int num) {
         if (!positiveRestriction) {
             return true;
@@ -52,6 +59,7 @@ public class NumberSchema extends BaseSchema<Integer> {
         }
     }
 
+    // проверяет вхождение числа в диапазон
     private boolean isInRange(int num) {
         return num >= minValue && num <= maxValue;
     }

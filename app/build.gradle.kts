@@ -1,7 +1,6 @@
 plugins {
     id("java")
     checkstyle
-    application
     jacoco
     id("com.github.mrsarm.jshell.plugin") version "1.2.1"
 }
@@ -16,10 +15,6 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-application {
-    mainClass = "hexlet.code.App";
 }
 
 tasks.test {

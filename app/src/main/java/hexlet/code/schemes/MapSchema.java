@@ -10,18 +10,24 @@ public class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
     private boolean nestedValidation;
     Map<K, BaseSchema<V>> schemas;
 
+    // в конструкторе устанавливаем все ограничения на false
     public MapSchema() {
         restriction = false;
         sizeRestriction = false;
         nestedValidation = false;
     }
 
+    // активирует ограничения на null
     @Override
     public MapSchema<K, V> required() {
         restriction = true;
         return this;
     }
 
+    // проверяет валидность данных,
+    // проверяет, если нужно, валидность вложенных данных
+    // обрабатывает null,
+    // проверяет валидность самой map
     @Override
     public boolean isValid(Map<K, V> value) {
 
@@ -44,12 +50,14 @@ public class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
         return  isTheSameSize(value);
     }
 
+    // устанавливает минимальный размер map
     public MapSchema<K, V> sizeof(int size) {
         sizeOfMap = size;
         sizeRestriction = true;
         return this;
     }
 
+    // устанавливает проверку валидности вложенных данных
     public MapSchema<K, V> shape(Map<K, BaseSchema<V>> scheme) {
         nestedValidation = true;
         schemas = new HashMap<>();
@@ -57,6 +65,7 @@ public class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
         return this;
     }
 
+    // проверяет размер map
     private boolean isTheSameSize(Map<K, V> map) {
         if (!sizeRestriction) {
             return true;
