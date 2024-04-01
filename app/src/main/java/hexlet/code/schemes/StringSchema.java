@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StringSchema extends BaseSchema<String> {
-
+    private boolean restriction;
     private Integer minValueOfLength;
     private boolean lengthRestriction;
     private List<String> subStrings;
     private boolean subStringsRestriction;
 
     public StringSchema() {
-        super();
+        restriction = false;
         subStrings = new ArrayList<>();
         lengthRestriction = false;
         subStringsRestriction = false;
+    }
+
+    @Override
+    public StringSchema required() {
+        restriction = true;
+        return this;
     }
 
     @Override
@@ -30,14 +36,16 @@ public class StringSchema extends BaseSchema<String> {
         return isContains(str) && isTheSameLength(str);
     }
 
-    public void minLength(int length) {
+    public StringSchema minLength(int length) {
         minValueOfLength = length;
         lengthRestriction = true;
+        return this;
     }
 
-    public void contains(String substring) {
+    public StringSchema contains(String substring) {
         subStrings.add(substring);
         subStringsRestriction = true;
+        return this;
     }
 
     private boolean isContains(String str) {

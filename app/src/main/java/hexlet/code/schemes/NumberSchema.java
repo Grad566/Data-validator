@@ -1,18 +1,26 @@
 package hexlet.code.schemes;
 
 public class NumberSchema extends BaseSchema<Integer> {
+    private boolean restriction;
     private boolean positiveRestriction;
     private Integer minValue;
     private Integer maxValue;
     private boolean rangeRestriction;
 
     public NumberSchema() {
-        super();
+        restriction = false;
         positiveRestriction = false;
         minValue = Integer.MIN_VALUE;
         maxValue = Integer.MAX_VALUE;
         rangeRestriction = false;
     }
+
+    @Override
+    public NumberSchema required() {
+        restriction = true;
+        return this;
+    }
+
     @Override
     public boolean isValid(Integer value) {
         if (value == null && (restriction || positiveRestriction || rangeRestriction)) {
@@ -24,14 +32,16 @@ public class NumberSchema extends BaseSchema<Integer> {
         return isInRange(value) && isPositive(value);
     }
 
-    public void positive() {
+    public NumberSchema positive() {
         positiveRestriction = true;
+        return this;
     }
 
-    public void range(int num1, int num2) {
+    public NumberSchema range(int num1, int num2) {
         minValue = num1;
         maxValue = num2;
         rangeRestriction = true;
+        return this;
     }
 
     private boolean isPositive(int num) {

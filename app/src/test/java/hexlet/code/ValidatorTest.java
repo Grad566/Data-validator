@@ -1,9 +1,11 @@
 package hexlet.code;
 
+import hexlet.code.schemes.BaseSchema;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,85 +18,100 @@ class ValidatorTest {
     }
 
     @Test
-    public void validatorNullString() {
+    public void testValidatorNullString() {
         var expected = true;
-        var schema = validator.string();
-        var actual = schema.isValid(null);
+        var actual = validator.string()
+                        .isValid(null);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void validatorEmptyString() {
+    public void testValidatorEmptyString() {
         var expected = false;
-        var schema = validator.string();
-
-        schema.required();
-        var actual = schema.isValid("");
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void validatorNormalString() {
-        var expected = true;
-        var schema = validator.string();
-
-        schema.contains("wh");
-        schema.minLength(2);
-
-        var actual = schema.isValid("what does the fox say");
+        var actual = validator.string()
+                        .required()
+                        .isValid("");
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void validatorNormalNumber() {
+    public void testValidatorNormalString() {
         var expected = true;
-        var schema = validator.number();
-
-        schema.required();
-        schema.range(5, 10);
-        schema.positive();
-
-        var actual = schema.isValid(5);
+        var actual = validator.string()
+                        .contains("wh")
+                        .minLength(2)
+                        .isValid("what does the fox say");
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void validatorNullNumber() {
+    public void testValidatorNormalNumber() {
         var expected = true;
-        var schema = validator.number();
-
-        var actual = schema.isValid(null);
+        var actual = validator.number()
+                        .required()
+                        .range(5, 10)
+                        .positive()
+                        .isValid(6);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void validatorNullMap() {
+    public void testValidatorNullNumber() {
         var expected = true;
-        var schema = validator.map();
-
-        var actual = schema.isValid(null);
+        var actual = validator.number()
+                        .isValid(null);
 
         assertEquals(expected, actual);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
-    public void validatorNormalMap() {
+    public void testValidatorNullMap() {
         var expected = true;
-        var schema = validator.map();
+        Map<String, String> data = null;
+        var actual = validator.map()
+                        .isValid(data);
 
-        schema.required();
-        schema.sizeof(2);
+        assertEquals(expected, actual);
+    }
 
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testValidatorNormalMap() {
+        var expected = true;
         var data = new HashMap<String, String>();
         data.put("key1", "value1");
         data.put("key2", "value2");
 
-        var actual = schema.isValid(data);
+        var actual = validator.map()
+                        .required()
+                        .sizeof(2)
+                        .isValid(data);
+
+        assertEquals(expected, actual);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testValidatorNestedMap() {
+        var expected = true;
+        var schema = validator.map();
+
+        Map<String, BaseSchema<String>> schemas = new HashMap<>();
+        schemas.put("firstName", validator.string().required());
+        schemas.put("lastName", validator.string().required().minLength(2));
+
+        schema.shape(schemas);
+
+        Map<String, String> human = new HashMap<>();
+        human.put("firstName", "John");
+        human.put("lastName", "Smith");
+
+        var actual = schema.isValid(human);
 
         assertEquals(expected, actual);
     }
