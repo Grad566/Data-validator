@@ -1,6 +1,6 @@
 package hexlet.code;
 
-import hexlet.code.schemes.BaseSchema;
+import hexlet.code.schemas.BaseSchema;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

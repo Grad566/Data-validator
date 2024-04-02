@@ -1,4 +1,4 @@
-package hexlet.code.schemes;
+package hexlet.code.schemas;
 
 public abstract class BaseSchema<T> {
     // накладывает ограничения на null и частные случаи в зависимости от типа данных

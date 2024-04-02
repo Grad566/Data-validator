@@ -1,14 +1,14 @@
-package hexlet.code.schemes;
+package hexlet.code.schemas;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
+public class MapSchema extends BaseSchema<Map<?, ?>> {
     private boolean restriction;
     private Integer sizeOfMap;
     private boolean sizeRestriction;
     private boolean nestedValidation;
-    Map<K, BaseSchema<V>> schemas;
+    Map<?, BaseSchema<?>> schemas;
 
     // в конструкторе устанавливаем все ограничения на false
     public MapSchema() {
@@ -19,7 +19,7 @@ public class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
 
     // активирует ограничения на null
     @Override
-    public MapSchema<K, V> required() {
+    public MapSchema required() {
         restriction = true;
         return this;
     }
@@ -29,10 +29,10 @@ public class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
     // обрабатывает null,
     // проверяет валидность самой map
     @Override
-    public boolean isValid(Map<K, V> value) {
+    public boolean isValid(Map<?, ?> value) {
 
         if (nestedValidation) {
-            for (Map.Entry<K, V> entry : value.entrySet()) {
+            for (Map.Entry<?, ?> entry : value.entrySet()) {
                 if (!schemas.get(entry.getKey()).isValid(entry.getValue())) {
                     return false;
                 }
@@ -51,14 +51,14 @@ public class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
     }
 
     // устанавливает минимальный размер map
-    public MapSchema<K, V> sizeof(int size) {
+    public MapSchema sizeof(int size) {
         sizeOfMap = size;
         sizeRestriction = true;
         return this;
     }
 
     // устанавливает проверку валидности вложенных данных
-    public MapSchema<K, V> shape(Map<K, BaseSchema<V>> scheme) {
+    public MapSchema shape(Map<?, BaseSchema<?>> scheme) {
         nestedValidation = true;
         schemas = new HashMap<>();
         schemas.putAll(scheme);
@@ -66,7 +66,7 @@ public class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
     }
 
     // проверяет размер map
-    private boolean isTheSameSize(Map<K, V> map) {
+    private boolean isTheSameSize(Map<?, ?> map) {
         if (!sizeRestriction) {
             return true;
         } else {
