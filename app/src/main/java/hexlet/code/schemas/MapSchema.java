@@ -22,10 +22,21 @@ public class MapSchema extends BaseSchema<Map<?, ?>> {
     }
 
      // устанавливает проверку валидности вложенных данных
-    public MapSchema shape(Map<?, BaseSchema<?>> schema) {
+    public MapSchema shape(Map<String, BaseSchema<?>> schema) {
         Predicate<Map<?, ?>> isValidData = map -> {
-            return map.entrySet().stream()
-                    .allMatch(entry -> schema.get(entry.getKey()).isValid(entry.getValue()));
+            for (Map.Entry<String, BaseSchema<?>> entry : schema.entrySet()) {
+
+                if (!map.containsKey(entry.getKey())) {
+                    return false;
+                } else {
+
+                    if (!entry.getValue().isValid(map.get(entry.getKey()))) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         };
         validations.add(isValidData);
         return this;
