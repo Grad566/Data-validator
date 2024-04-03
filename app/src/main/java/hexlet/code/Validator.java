@@ -4,7 +4,7 @@ import hexlet.code.schemas.MapSchema;
 import hexlet.code.schemas.NumberSchema;
 import hexlet.code.schemas.StringSchema;
 
-public class Validator<K, V> {
+public class Validator {
     public StringSchema string() {
         return new StringSchema();
     }
@@ -13,7 +13,6 @@ public class Validator<K, V> {
         return new NumberSchema();
     }
 
-    @SuppressWarnings("rawtypes")
     public MapSchema map() {
         return new MapSchema();
     }
