@@ -18,7 +18,7 @@ public abstract class BaseSchema<T> {
     // проверяет валидность данных
     public boolean isValid(T value) {
 
-        if (value == null) {
+        if (value == null || (value instanceof String && ((String) value).isEmpty())) {
             return !isRequire;
         }
 

@@ -49,7 +49,7 @@ class ValidatorTest {
 
     @Test
     public void testValidatorEmptyString2() {
-        var expected = false;
+        var expected = true;
         var schema = validator.string().contains("asd");
         var actual = schema
                 .isValid("");
