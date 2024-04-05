@@ -20,7 +20,7 @@ class ValidatorTest {
     @Test
     public void testValidatorNullString() {
         var expected = true;
-        var schema = validator.string();
+        var schema = validator.string().minLength(2);
         var actual = schema
                         .isValid(null);
 
@@ -28,12 +28,31 @@ class ValidatorTest {
     }
 
     @Test
+    public void testValidatorNullString2() {
+        var expected = false;
+        var schema = validator.string().required().minLength(2);
+        var actual = schema
+                .isValid(null);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testValidatorEmptyString() {
         var expected = false;
-        var schema = validator.string()
-                        .required();
+        var schema = validator.string().contains("asd").required();
         var actual = schema
                         .isValid("");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testValidatorEmptyString2() {
+        var expected = false;
+        var schema = validator.string().contains("asd");
+        var actual = schema
+                .isValid("");
 
         assertEquals(expected, actual);
     }
@@ -46,6 +65,19 @@ class ValidatorTest {
                         .minLength(2);
         var actual = schema
                         .isValid("what does the fox say");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testValidatorNormalString2() {
+        var expected = false;
+        var schema = validator.string()
+                .contains("wh")
+                .minLength(2)
+                .contains("asfsdfdsf");
+        var actual = schema
+                .isValid("what does the fox say");
 
         assertEquals(expected, actual);
     }
@@ -64,9 +96,22 @@ class ValidatorTest {
     }
 
     @Test
+    public void testValidatorNormalNumber2() {
+        var expected = false;
+        var schema = validator.number()
+                .required()
+                .range(7, 10)
+                .positive();
+        var actual = schema
+                .isValid(6);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testValidatorNullNumber() {
-        var expected = true;
-        var schema = validator.number();
+        var expected = false;
+        var schema = validator.number().required();
         var actual = schema
                         .isValid(null);
 
@@ -90,9 +135,20 @@ class ValidatorTest {
     public void testValidatorNullMap() {
         var expected = true;
         Map<String, String> data = null;
-        var schema = validator.map();
+        var schema = validator.map().sizeof(4);
         var actual = schema
                         .isValid(data);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testValidatorNullMap2() {
+        var expected = false;
+        Map<String, String> data = null;
+        var schema = validator.map().required().sizeof(3);
+        var actual = schema
+                .isValid(data);
 
         assertEquals(expected, actual);
     }

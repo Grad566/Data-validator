@@ -13,7 +13,7 @@ public class NumberSchema extends BaseSchema<Integer> {
 
     // устанавливает ограничения - число не может быть отрицательным
     public NumberSchema positive() {
-        Predicate<Integer> isPositive = num -> num >= 0;
+        Predicate<Integer> isPositive = num -> num > 0;
         validations.add(isPositive);
         return this;
     }
