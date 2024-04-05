@@ -21,6 +21,8 @@ public class MapSchema extends BaseSchema<Map<?, ?>> {
         return this;
     }
 
+
+    // проверяет валидность вложенных данных
     @SuppressWarnings("unchecked")
     public <T> MapSchema shape(Map<String, BaseSchema<T>> schemas) {
         Predicate<Map<?, ?>> isValidData = map -> schemas.entrySet()
