@@ -13,10 +13,10 @@ public abstract class BaseSchema<T> {
         isRequire = false;
     }
     // накладывает ограничения на null и частные случаи в зависимости от типа данных
-    public  abstract BaseSchema<T> required();
+    public abstract BaseSchema<T> required();
 
     // проверяет валидность данных
-    public boolean isValid(T value) {
+    public final boolean isValid(T value) {
 
         if (value == null || (value instanceof String && ((String) value).isEmpty())) {
             return !isRequire;
