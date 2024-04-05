@@ -14,16 +14,14 @@ public class StringSchema extends BaseSchema<String> {
     // устанавливает минимальную длину строки
     public StringSchema minLength(int length) {
         Predicate<String> isBiggestThenMinLength = str -> str.length() >= length;
-        validations.removeIf(predicate -> predicate.equals(isBiggestThenMinLength));
-        validations.add(isBiggestThenMinLength);
+        validations.put("minLength", isBiggestThenMinLength);
         return this;
     }
 
     // добавляет ограничение - подстроки, которые должны быть в строке
     public StringSchema contains(String substring) {
         Predicate<String> isContains = str -> str.contains(substring);
-        validations.removeIf(predicate -> predicate.equals(isContains));
-        validations.add(isContains);
+        validations.put("isContains", isContains);
         return this;
     }
 

@@ -14,14 +14,14 @@ public class NumberSchema extends BaseSchema<Integer> {
     // устанавливает ограничения - число не может быть отрицательным
     public NumberSchema positive() {
         Predicate<Integer> isPositive = num -> num > 0;
-        validations.add(isPositive);
+        validations.put("isPositive", isPositive);
         return this;
     }
 
     // устанавливает допустимый диапазон
     public NumberSchema range(int num1, int num2) {
         Predicate<Integer> isInRange = num -> num >= num1 && num <= num2;
-        validations.add(isInRange);
+        validations.put("isInRange", isInRange);
         return this;
     }
 

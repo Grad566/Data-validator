@@ -15,7 +15,7 @@ public class MapSchema extends BaseSchema<Map<?, ?>> {
     // устанавливает минимальный размер map
     public MapSchema sizeof(int size) {
         Predicate<Map<?, ?>> isTheSameSize = map -> map.size() == size;
-        validations.add(isTheSameSize);
+        validations.put("sizeOf", isTheSameSize);
         return this;
     }
 
@@ -30,7 +30,7 @@ public class MapSchema extends BaseSchema<Map<?, ?>> {
                     var schema = element.getValue();
                     return schema.isValid((T) value);
                 });
-        validations.add(isValidData);
+        validations.put("isValidData", isValidData);
         return this;
     }
 }

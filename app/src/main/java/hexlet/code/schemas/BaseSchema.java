@@ -1,15 +1,15 @@
 package hexlet.code.schemas;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
-    protected List<Predicate<T>> validations;
+    protected Map<String, Predicate<T>> validations;
     protected boolean isRequire;
 
     public BaseSchema() {
-        validations = new ArrayList<>();
+        validations = new HashMap<>();
         isRequire = false;
     }
     // накладывает ограничения на null и частные случаи в зависимости от типа данных
@@ -22,7 +22,7 @@ public abstract class BaseSchema<T> {
             return !isRequire;
         }
 
-        return validations.stream()
-                .allMatch(predicate -> predicate.test(value));
+        return validations.entrySet().stream()
+                .allMatch(predicate -> predicate.getValue().test(value));
     }
 }
