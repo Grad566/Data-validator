@@ -68,6 +68,17 @@ class ValidatorTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void testValidatorNullNumber2() {
+        var expected = true;
+        var actual = validator.number()
+                .range(5, 10)
+                .positive()
+                .isValid(null);
+
+        assertEquals(expected, actual);
+    }
+
 
     @Test
     public void testValidatorNullMap() {
