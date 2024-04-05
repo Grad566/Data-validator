@@ -14,6 +14,7 @@ public class StringSchema extends BaseSchema<String> {
     // устанавливает минимальную длину строки
     public StringSchema minLength(int length) {
         Predicate<String> isBiggestThenMinLength = str -> str.length() >= length;
+        validations.removeIf(predicate -> predicate.equals(isBiggestThenMinLength));
         validations.add(isBiggestThenMinLength);
         return this;
     }
