@@ -22,6 +22,7 @@ public class StringSchema extends BaseSchema<String> {
     // добавляет ограничение - подстроки, которые должны быть в строке
     public StringSchema contains(String substring) {
         Predicate<String> isContains = str -> str.contains(substring);
+        validations.removeIf(predicate -> predicate.equals(isContains));
         validations.add(isContains);
         return this;
     }
