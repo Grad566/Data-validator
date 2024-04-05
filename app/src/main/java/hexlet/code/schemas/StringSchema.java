@@ -7,8 +7,6 @@ public class StringSchema extends BaseSchema<String> {
     // активирует ограничения на null и пустую строку
     @Override
     public StringSchema required() {
-        Predicate<String> notNull = str -> str != null && !str.isEmpty();
-        validations.add(notNull);
         isRequire = true;
         return this;
     }
