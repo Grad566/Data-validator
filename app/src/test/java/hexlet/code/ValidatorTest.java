@@ -20,7 +20,8 @@ class ValidatorTest {
     @Test
     public void testValidatorNullString() {
         var expected = true;
-        var actual = validator.string()
+        var schema = validator.string();
+        var actual = schema
                         .isValid(null);
 
         assertEquals(expected, actual);
@@ -29,8 +30,9 @@ class ValidatorTest {
     @Test
     public void testValidatorEmptyString() {
         var expected = false;
-        var actual = validator.string()
-                        .required()
+        var schema = validator.string()
+                        .required();
+        var actual = schema
                         .isValid("");
 
         assertEquals(expected, actual);
@@ -39,9 +41,10 @@ class ValidatorTest {
     @Test
     public void testValidatorNormalString() {
         var expected = true;
-        var actual = validator.string()
+        var schema = validator.string()
                         .contains("wh")
-                        .minLength(2)
+                        .minLength(2);
+        var actual = schema
                         .isValid("what does the fox say");
 
         assertEquals(expected, actual);
@@ -50,10 +53,11 @@ class ValidatorTest {
     @Test
     public void testValidatorNormalNumber() {
         var expected = true;
-        var actual = validator.number()
-                        .required()
-                        .range(5, 10)
-                        .positive()
+        var schema = validator.number()
+                .required()
+                .range(5, 10)
+                .positive();
+        var actual = schema
                         .isValid(6);
 
         assertEquals(expected, actual);
@@ -62,7 +66,8 @@ class ValidatorTest {
     @Test
     public void testValidatorNullNumber() {
         var expected = true;
-        var actual = validator.number()
+        var schema = validator.number();
+        var actual = schema
                         .isValid(null);
 
         assertEquals(expected, actual);
@@ -71,9 +76,10 @@ class ValidatorTest {
     @Test
     public void testValidatorNullNumber2() {
         var expected = true;
-        var actual = validator.number()
+        var schema = validator.number()
                 .range(5, 10)
-                .positive()
+                .positive();
+        var actual = schema
                 .isValid(null);
 
         assertEquals(expected, actual);
@@ -84,7 +90,8 @@ class ValidatorTest {
     public void testValidatorNullMap() {
         var expected = true;
         Map<String, String> data = null;
-        var actual = validator.map()
+        var schema = validator.map();
+        var actual = schema
                         .isValid(data);
 
         assertEquals(expected, actual);
@@ -96,10 +103,11 @@ class ValidatorTest {
         var data = new HashMap<String, String>();
         data.put("key1", "value1");
         data.put("key2", "value2");
+        var schema = validator.map()
+                .required()
+                .sizeof(2);
 
-        var actual = validator.map()
-                        .required()
-                        .sizeof(2)
+        var actual = schema
                         .isValid(data);
 
         assertEquals(expected, actual);

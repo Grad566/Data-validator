@@ -9,6 +9,7 @@ public class StringSchema extends BaseSchema<String> {
     public StringSchema required() {
         Predicate<String> notNull = str -> str != null && !str.isEmpty();
         validations.add(notNull);
+        isRequire = true;
         return this;
     }
 

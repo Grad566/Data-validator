@@ -1,6 +1,5 @@
 package hexlet.code.schemas;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 
 public class NumberSchema extends BaseSchema<Integer> {
@@ -8,8 +7,7 @@ public class NumberSchema extends BaseSchema<Integer> {
     // устанавливаем ограничения на null
     @Override
     public NumberSchema required() {
-        Predicate<Integer> notNull = Objects::nonNull;
-        validations.add(notNull);
+        isRequire = true;
         return this;
     }
 

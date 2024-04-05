@@ -1,7 +1,6 @@
 package hexlet.code.schemas;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 public class MapSchema extends BaseSchema<Map<?, ?>> {
@@ -9,8 +8,7 @@ public class MapSchema extends BaseSchema<Map<?, ?>> {
     // добавляет ограничения на null
     @Override
     public MapSchema required() {
-        Predicate<Map<?, ?>> notNull = Objects::nonNull;
-        validations.add(notNull);
+        isRequire = true;
         return this;
     }
 
