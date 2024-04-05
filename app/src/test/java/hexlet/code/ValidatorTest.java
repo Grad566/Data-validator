@@ -75,7 +75,8 @@ class ValidatorTest {
         var schema = validator.string()
                 .contains("wh")
                 .minLength(2)
-                .contains("asfsdfdsf");
+                .contains("asfsdfdsf")
+                .required();
         var actual = schema
                 .isValid("what does the fox say");
 
