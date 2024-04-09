@@ -53,4 +53,15 @@ class NumberSchemaTest {
         assertFalse(schema.isValid(null));
     }
 
+    @Test
+    public void testNumberSchemaAllRestriction() {
+        var schema = validator.number()
+                .required()
+                .range(5, 10)
+                .positive();
+
+        assertFalse(schema.isValid(2));
+        assertFalse(schema.isValid(null));
+    }
+
 }

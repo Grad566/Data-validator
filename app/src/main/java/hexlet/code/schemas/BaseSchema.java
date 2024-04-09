@@ -17,7 +17,7 @@ public abstract class BaseSchema<T> {
     // проверяет валидность данных
     public final boolean isValid(T value) {
 
-        if (validations.containsKey("Required")) {
+        if (validations.containsKey("Required") && isExceptionValue(value)) {
             return validations.get("Required").test(value);
         } else if (isExceptionValue(value)) {
             return true;
