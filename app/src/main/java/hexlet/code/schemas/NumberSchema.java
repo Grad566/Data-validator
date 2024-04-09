@@ -23,4 +23,9 @@ public final class NumberSchema extends BaseSchema<Integer> {
         return this;
     }
 
+    @Override
+    protected boolean isExceptionValue(Integer value) {
+        return value == null;
+    }
+
 }

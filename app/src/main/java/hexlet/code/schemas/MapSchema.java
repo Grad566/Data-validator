@@ -31,4 +31,9 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
                 }));
         return this;
     }
+
+    @Override
+    protected boolean isExceptionValue(Map<?, ?> value) {
+        return value == null;
+    }
 }

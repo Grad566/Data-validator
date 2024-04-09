@@ -27,7 +27,5 @@ public abstract class BaseSchema<T> {
                 .allMatch(predicate -> predicate.getValue().test(value));
     }
 
-    protected boolean isExceptionValue(T value) {
-        return value == null;
-    }
+    protected abstract boolean isExceptionValue(T value);
 }
