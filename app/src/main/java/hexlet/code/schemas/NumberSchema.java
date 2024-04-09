@@ -1,27 +1,25 @@
 package hexlet.code.schemas;
 
-import java.util.function.Predicate;
+import java.util.Objects;
 
 public final class NumberSchema extends BaseSchema<Integer> {
 
     // устанавливаем ограничения на null
     @Override
     public NumberSchema required() {
-        isRequire = true;
+        validations.put("Required", Objects::nonNull);
         return this;
     }
 
     // устанавливает ограничения - число не может быть отрицательным
     public NumberSchema positive() {
-        Predicate<Integer> isPositive = num -> num > 0;
-        validations.put("isPositive", isPositive);
+        validations.put("isPositive", num -> num > 0);
         return this;
     }
 
     // устанавливает допустимый диапазон
     public NumberSchema range(int num1, int num2) {
-        Predicate<Integer> isInRange = num -> num >= num1 && num <= num2;
-        validations.put("isInRange", isInRange);
+        validations.put("isInRange", num -> num >= num1 && num <= num2);
         return this;
     }
 

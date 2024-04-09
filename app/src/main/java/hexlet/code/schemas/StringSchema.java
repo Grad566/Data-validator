@@ -1,28 +1,28 @@
 package hexlet.code.schemas;
 
-import java.util.function.Predicate;
-
 public final class StringSchema extends BaseSchema<String> {
 
     // активирует ограничения на null и пустую строку
     @Override
     public StringSchema required() {
-        isRequire = true;
+        validations.put("Required", value -> value != null && !value.isEmpty());
         return this;
     }
 
     // устанавливает минимальную длину строки
     public StringSchema minLength(int length) {
-        Predicate<String> isBiggestThenMinLength = str -> str.length() >= length;
-        validations.put("minLength", isBiggestThenMinLength);
+        validations.put("minLength", str -> str.length() >= length);
         return this;
     }
 
     // добавляет ограничение - подстроки, которые должны быть в строке
     public StringSchema contains(String substring) {
-        Predicate<String> isContains = str -> str.contains(substring);
-        validations.put("isContains", isContains);
+        validations.put("isContains", str -> str.contains(substring));
         return this;
     }
 
+    @Override
+    protected boolean isExceptionValue(String value) {
+        return value == null || value.isEmpty();
+    }
 }

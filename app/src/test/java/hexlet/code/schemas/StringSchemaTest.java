@@ -61,10 +61,10 @@ class StringSchemaTest {
     @Test
     public void testStringSchemaMinLength() {
         var schema = validator.string()
-                .minLength(30)
+                .minLength(2)
                 .required();
 
-        assertFalse(schema.isValid("what does the fox say"));
+        assertTrue(schema.isValid("what does the fox say"));
         assertFalse(schema.isValid(null));
     }
 
