@@ -51,9 +51,9 @@ class NumberSchemaTest {
     @Test
     public void testNumberSchemaAllRestriction() {
         var schema = validator.number()
-                .required()
                 .range(5, 10)
-                .positive();
+                .positive()
+                .required();
 
         assertFalse(schema.isValid(-12));
         assertTrue(schema.isValid(8));

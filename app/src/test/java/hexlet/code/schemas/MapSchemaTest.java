@@ -54,7 +54,7 @@ class MapSchemaTest {
         schemas.put("firstName", validator.string().required());
         schemas.put("lastName", validator.string().required().minLength(2));
 
-        schema.shape(schemas).required().sizeof(2);
+        schema.shape(schemas).sizeof(2).required();
 
         Map<String, String> human = new HashMap<>();
         human.put("firstName", "John");

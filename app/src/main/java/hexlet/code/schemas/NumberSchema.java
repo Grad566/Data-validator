@@ -4,13 +4,6 @@ import java.util.Objects;
 
 public final class NumberSchema extends BaseSchema<Integer> {
 
-    // устанавливаем ограничения на null
-    @Override
-    public NumberSchema required() {
-        addValidation("Required", Objects::nonNull);
-        return this;
-    }
-
     // устанавливает ограничения - число не может быть отрицательным
     public NumberSchema positive() {
         addValidation("isPositive", num -> num == null || num > 0);

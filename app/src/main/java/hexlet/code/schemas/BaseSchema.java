@@ -2,6 +2,7 @@ package hexlet.code.schemas;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
@@ -11,8 +12,14 @@ public abstract class BaseSchema<T> {
         validations = new HashMap<>();
     }
 
-    // накладывает ограничения на null и частные случаи в зависимости от типа данных
-    public abstract BaseSchema<T> required();
+    /**
+     *
+     * @return
+     */
+    public BaseSchema<T> required() {
+        addValidation("Required", Objects::nonNull);
+        return this;
+    }
 
     // проверяет валидность данных
     public final boolean isValid(T value) {

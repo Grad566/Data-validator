@@ -5,13 +5,6 @@ import java.util.Objects;
 
 public final class MapSchema extends BaseSchema<Map<?, ?>> {
 
-    // добавляет ограничения на null
-    @Override
-    public MapSchema required() {
-        addValidation("Required", Objects::nonNull);
-        return this;
-    }
-
     // устанавливает размер map
     public MapSchema sizeof(int size) {
         addValidation("sizeOf", map -> map == null || map.size() == size);
