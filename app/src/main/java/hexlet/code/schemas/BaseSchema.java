@@ -22,7 +22,7 @@ public abstract class BaseSchema<T> {
 
     }
 
-    protected void addValidation(String name, Predicate<T> predicate) {
+    protected final void addValidation(String name, Predicate<T> predicate) {
         validations.put(name, predicate);
     }
 
