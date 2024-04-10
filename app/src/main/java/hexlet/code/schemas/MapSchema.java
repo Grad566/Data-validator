@@ -12,7 +12,7 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
         return this;
     }
 
-    // устанавливает минимальный размер map
+    // устанавливает размер map
     public MapSchema sizeof(int size) {
         addValidation("sizeOf", map -> map == null || map.size() == size);
         return this;

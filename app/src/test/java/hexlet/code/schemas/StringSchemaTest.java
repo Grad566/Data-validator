@@ -17,27 +17,14 @@ class StringSchemaTest {
 
     @Test
     public void testStringSchemaRequiredNull() {
-        var schema = validator.string()
-                .minLength(2);
+        var schema = validator.string();
 
         assertTrue(schema.isValid(null));
-    }
+        assertTrue(schema.isValid(""));
 
-    @Test
-    public void testStringSchemaRequiredNull2() {
-        var schema = validator.string()
-                .required()
-                .minLength(2);
+        schema.required();
 
         assertFalse(schema.isValid(null));
-    }
-
-    @Test
-    public void testStringSchemaRequiredEmptyString() {
-        var schema = validator.string()
-                .contains("asd")
-                .required();
-
         assertFalse(schema.isValid(""));
     }
 
@@ -47,27 +34,30 @@ class StringSchemaTest {
                 .contains("wh");
 
         assertTrue(schema.isValid("what does the fox say"));
+        assertFalse(schema.isValid("Don't know"));
         assertTrue(schema.isValid(null));
     }
 
     @Test
     public void testStringSchemaMinLength() {
         var schema = validator.string()
-                .minLength(2)
-                .required();
+                .minLength(2);
 
         assertTrue(schema.isValid("what does the fox say"));
-        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid("wh"));
+        assertFalse(schema.isValid("1"));
+        assertTrue(schema.isValid(null));
     }
 
     @Test
     public void testStringSchemaAllRestrictions() {
         var schema = validator.string()
-                .minLength(2)
+                .minLength(5)
                 .contains("does")
                 .required();
 
         assertTrue(schema.isValid("what does the fox say"));
+        assertFalse(schema.isValid("what do you say"));
         assertFalse(schema.isValid(null));
     }
 

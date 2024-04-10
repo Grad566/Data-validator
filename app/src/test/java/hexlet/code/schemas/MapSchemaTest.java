@@ -21,19 +21,13 @@ class MapSchemaTest {
     @Test
     public void testMapSchemaRequired() {
         Map<String, String> data = null;
-        var schema = validator.map()
-                .required();
-
-        assertFalse(schema.isValid(data));
-    }
-
-    @Test
-    public void testMapSchemaRequired2() {
-        Map<String, String> data = null;
-        var schema = validator.map()
-                .sizeof(3);
+        var schema = validator.map();
 
         assertTrue(schema.isValid(data));
+
+        schema.required();
+
+        assertFalse(schema.isValid(data));
     }
 
     @Test
@@ -42,11 +36,14 @@ class MapSchemaTest {
         data.put("key1", "value1");
         data.put("key2", "value2");
         var schema = validator.map()
-                .required()
                 .sizeof(2);
 
         assertTrue(schema.isValid(data));
-        assertFalse(schema.isValid(null));
+
+        data.put("key3", "value3");
+
+        assertFalse(schema.isValid(data));
+        assertTrue(schema.isValid(null));
     }
 
     @Test
@@ -83,6 +80,10 @@ class MapSchemaTest {
 
         assertTrue(schema.isValid(human));
         assertFalse(schema.isValid(null));
+
+        human.put("lastName", null);
+
+        assertFalse(schema.isValid(human));
     }
 
 }

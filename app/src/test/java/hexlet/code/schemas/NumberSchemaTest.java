@@ -17,19 +17,11 @@ class NumberSchemaTest {
 
     @Test
     public void testNumberSchemaRequired() {
-        var schema = validator.number()
-                .range(5, 10)
-                .positive();
+        var schema = validator.number();
 
         assertTrue(schema.isValid(null));
-    }
 
-    @Test
-    public void testNumberSchemaRequired2() {
-        var schema = validator.number()
-                .range(5, 10)
-                .positive()
-                .required();
+        schema.required();
 
         assertFalse(schema.isValid(null));
     }
@@ -40,17 +32,20 @@ class NumberSchemaTest {
                 .positive();
 
         assertFalse(schema.isValid(-6));
+        assertTrue(schema.isValid(10000));
         assertTrue(schema.isValid(null));
     }
 
     @Test
     public void testNumberSchemaRange() {
         var schema = validator.number()
-                .required()
                 .range(5, 10);
 
         assertTrue(schema.isValid(6));
-        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(99));
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(10));
+        assertTrue(schema.isValid(null));
     }
 
     @Test
@@ -60,7 +55,8 @@ class NumberSchemaTest {
                 .range(5, 10)
                 .positive();
 
-        assertFalse(schema.isValid(2));
+        assertFalse(schema.isValid(-12));
+        assertTrue(schema.isValid(8));
         assertFalse(schema.isValid(null));
     }
 
