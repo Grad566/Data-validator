@@ -13,8 +13,8 @@ public abstract class BaseSchema<T> {
     }
 
     /**
-     *
-     * @return
+     * Добавляет ограничения на null и другие исключения.
+     * @return текущий экземпляр BaseSchema.
      */
     public BaseSchema<T> required() {
         addValidation("Required", Objects::nonNull);
