@@ -8,13 +8,13 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
     // добавляет ограничения на null
     @Override
     public MapSchema required() {
-        validations.put("Required", Objects::nonNull);
+        addValidation("Required", Objects::nonNull);
         return this;
     }
 
     // устанавливает минимальный размер map
     public MapSchema sizeof(int size) {
-        validations.put("sizeOf", map -> map.size() == size);
+        addValidation("sizeOf", map -> map == null || map.size() == size);
         return this;
     }
 
@@ -22,7 +22,7 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
     // проверяет валидность вложенных данных
     @SuppressWarnings("unchecked")
     public <T> MapSchema shape(Map<String, BaseSchema<T>> schemas) {
-        validations.put("isValidData", map -> schemas.entrySet()
+        addValidation("isValidData", map -> schemas.entrySet()
                 .stream()
                 .allMatch(element -> {
                     var value = map.get(element.getKey());
@@ -32,8 +32,4 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
         return this;
     }
 
-    @Override
-    protected boolean isExceptionValue(Map<?, ?> value) {
-        return value == null;
-    }
 }

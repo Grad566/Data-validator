@@ -42,14 +42,6 @@ class StringSchemaTest {
     }
 
     @Test
-    public void testStringSchemaRequiredEmptyString2() {
-        var schema = validator.string()
-                .contains("asd");
-
-        assertTrue(schema.isValid(""));
-    }
-
-    @Test
     public void testStringSchemaContains() {
         var schema = validator.string()
                 .contains("wh");

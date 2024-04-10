@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
-    protected Map<String, Predicate<T>> validations;
+    private Map<String, Predicate<T>> validations;
 
     public BaseSchema() {
         validations = new HashMap<>();
@@ -17,15 +17,13 @@ public abstract class BaseSchema<T> {
     // проверяет валидность данных
     public final boolean isValid(T value) {
 
-        if (validations.containsKey("Required") && isExceptionValue(value)) {
-            return validations.get("Required").test(value);
-        } else if (isExceptionValue(value)) {
-            return true;
-        }
-
         return validations.entrySet().stream()
                 .allMatch(predicate -> predicate.getValue().test(value));
+
     }
 
-    protected abstract boolean isExceptionValue(T value);
+    protected void addValidation(String name, Predicate<T> predicate) {
+        validations.put(name, predicate);
+    }
+
 }
